@@ -48,6 +48,7 @@ const { pipeline } = require('stream/promises')
 
 const { LoggerUtil } = require('helios-core')
 const { DistributionAPI, validateLocalFile } = require('helios-core/common')
+const { buildChecklist, verifyFiles } = require('./fileverifier')
 const {
     MojangIndexProcessor,
     DistributionIndexProcessor,
@@ -201,7 +202,7 @@ function collectSha256(modules) {
 }
 
 /**
- * Validate stage, identical to helios-core FullRepairReceiver.validate.
+ * Validate stage: the files helios-core's FullRepairReceiver.validate checks, via fileverifier.
  */
 async function receiverValidate(message) {
     const api = new DistributionAPI(
@@ -225,24 +226,18 @@ async function receiverValidate(message) {
         distributionIndexProcessor
     ]
 
-    let numStages = 0
     for(const processor of receiver.processors) {
         await processor.init()
-        numStages += processor.totalStages()
     }
 
-    const assets = []
-    let completedStages = 0
-    for(const processor of receiver.processors) {
-        Object.values(await processor.validate(async () => {
-            completedStages++
-            process.send({ response: 'validateProgress', percent: Math.trunc((completedStages / numStages) * 100) })
-        }))
-            .flatMap(asset => asset)
-            .forEach(asset => assets.push(asset))
-    }
-
-    receiver.assets = assets
+    // Same files helios-core's validate stage checks, but cached, parallel and
+    // reported per file (see fileverifier.js).
+    receiver.assets = await verifyFiles(buildChecklist(mojangIndexProcessor, server), {
+        cacheDir: message.commonDirectory,
+        onProgress: ({ checked, total, percent }) => {
+            process.send({ response: 'validateProgress', percent, checked, total })
+        }
+    })
     process.send({ response: 'validateComplete', invalidCount: receiver.assets.length })
 }
 
@@ -495,7 +490,7 @@ class ImperiumRepair {
                 switch(message.response) {
                     case 'validateProgress':
                         log.debug('Received validate progress ' + message.percent)
-                        onProgress(message.percent)
+                        onProgress(message.percent, message.checked, message.total)
                         break
                     case 'validateComplete':
                         log.info('Received validation complete.')

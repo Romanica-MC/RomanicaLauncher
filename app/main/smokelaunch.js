@@ -23,6 +23,17 @@ const SMOKE_UUID = '00000000-0000-0000-0000-000000000000'
 exports.run = async function(core, launchservice){
     const { app } = require('electron')
     console.log('[SMOKE] headless smoke launch starting')
+    // No window in smoke mode, so print the launch events the progress bar would show:
+    // the run log then records exactly what a player sees, step by step.
+    launchservice.init(core, (event) => {
+        if(event.kind === 'progress' || event.kind === 'downloadProgress'){
+            console.log(`[SMOKE] progress ${event.percent}%`)
+        } else if(event.kind === 'details'){
+            console.log(`[SMOKE] status ${event.text}`)
+        } else if(event.kind === 'gameLaunched'){
+            console.log('[SMOKE] launcher marked the game ready')
+        }
+    })
     try {
         const data = await core.loadDistribution()
         if(data == null){

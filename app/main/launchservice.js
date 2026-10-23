@@ -30,6 +30,7 @@ const { reapStaleManagedModules } = require('../assets/js/managedmodcleanup')
 const ProcessBuilder     = require('../assets/js/processbuilder')
 const DiscordWrapper     = require('../assets/js/discordwrapper')
 const CrashScreen        = require('../assets/js/crashscreen')
+const { createTracker, tailGameLog } = require('./gameprogress')
 
 const loggerLaunchSuite = LoggerUtil.getLogger('LaunchSuite')
 const loggerLanding     = LoggerUtil.getLogger('Landing')
@@ -63,8 +64,14 @@ function L(key, placeholders){
 
 // Joined server / launch detection regexes (unchanged from landing.js).
 const GAME_JOINED_REGEX = /\[.+\]: Sound engine started/
-const GAME_LAUNCH_REGEX = /^\[.+\]: (?:MinecraftForge .+ Initialized|ModLauncher .+ starting: .+|Loading Minecraft .+ with Fabric Loader .+)$/
-const MIN_LINGER = 5000
+// One bar for the whole launch: each phase owns a slice, so it never resets to 0
+// between phases and never sits at 100% while the game is still loading.
+const PHASE = { info: 0, files: [3, 30], download: [30, 55], prepare: 57, game: 60 }
+// If the game never logs its ready line (a modded client logging less, say), stop
+// showing the launch progress after this long rather than spinning forever.
+const GAME_READY_TIMEOUT = 180000
+
+const slice = (range, percent) => Math.round(range[0] + (range[1] - range[0]) * Math.max(0, Math.min(100, percent)) / 100)
 
 /**
  * First stage of the launch button flow: resolve the selected server and
@@ -256,6 +263,7 @@ exports.validateJvm = async function(execPath){
  */
 exports.launch = async function(login = true){
     emit({ kind: 'details', text: L('landing.dlAsync.loadingServerInfo') })
+    emit({ kind: 'progress', percent: PHASE.info })
 
     let distro
     try {
@@ -281,7 +289,7 @@ exports.launch = async function(login = true){
 
     emit({ kind: 'details', text: L('landing.dlAsync.pleaseWait') })
     emit({ kind: 'loading', value: true })
-    emit({ kind: 'progress', percent: 0 })
+    emit({ kind: 'progress', percent: PHASE.files[0] })
 
     const repairModule = new ImperiumRepair(
         core.ConfigManager.getCommonDirectory(),
@@ -321,10 +329,13 @@ exports.launch = async function(login = true){
     emit({ kind: 'details', text: L('landing.dlAsync.validatingFileIntegrity') })
     let invalidFileCount = 0
     try {
-        invalidFileCount = await repairModule.verifyFiles(percent => {
-            emit({ kind: 'progress', percent })
+        invalidFileCount = await repairModule.verifyFiles((percent, checked, total) => {
+            emit({ kind: 'progress', percent: slice(PHASE.files, percent) })
+            if(total != null){
+                emit({ kind: 'details', text: L('landing.dlAsync.checkingFiles', { checked: checked.toLocaleString(), total: total.toLocaleString() }) })
+            }
         })
-        emit({ kind: 'progress', percent: 100 })
+        emit({ kind: 'progress', percent: PHASE.files[1] })
     } catch (err){
         loggerLaunchSuite.error('Error during file validation.')
         syncState.failureShown = true
@@ -335,12 +346,12 @@ exports.launch = async function(login = true){
     if(invalidFileCount > 0){
         loggerLaunchSuite.info('Downloading files.')
         emit({ kind: 'details', text: L('landing.dlAsync.downloadingFiles') })
-        emit({ kind: 'progress', percent: 0 })
+        emit({ kind: 'progress', percent: PHASE.download[0] })
         emit({ kind: 'clearFileProgress' })
         try {
             await repairModule.download(
                 percent => {
-                    emit({ kind: 'downloadProgress', percent })
+                    emit({ kind: 'downloadProgress', percent: slice(PHASE.download, percent) })
                 },
                 file => {
                     emit({ kind: 'fileProgress', text: L('landing.dlAsync.downloadingFile', {
@@ -358,7 +369,7 @@ exports.launch = async function(login = true){
                     })})
                 }
             )
-            emit({ kind: 'downloadProgress', percent: 100 })
+            emit({ kind: 'downloadProgress', percent: PHASE.download[1] })
         } catch(err){
             loggerLaunchSuite.error('Error during file download.')
             syncState.failureShown = true
@@ -392,6 +403,7 @@ exports.launch = async function(login = true){
     }
 
     emit({ kind: 'details', text: L('landing.dlAsync.preparingToLaunch') })
+    emit({ kind: 'progress', percent: PHASE.prepare })
 
     const mojangIndexProcessor = new MojangIndexProcessor(
         core.ConfigManager.getCommonDirectory(),
@@ -410,10 +422,20 @@ exports.launch = async function(login = true){
         loggerLaunchSuite.info(`Sending selected account (${authUser.displayName}) to ProcessBuilder.`)
         const pb = new ProcessBuilder(serv, versionData, modLoaderData, authUser, app.getVersion())
         emit({ kind: 'details', text: L('landing.dlAsync.launchingGame') })
+        emit({ kind: 'progress', percent: PHASE.game })
 
         const SERVER_JOINED_REGEX = new RegExp(`\\[.+\\]: \\[CHAT\\] ${authUser.displayName} joined the game`)
 
+        let loadCompleted = false
+        let readyTimer = null
+        let stopTail = () => {}
         const onLoadComplete = () => {
+            if(loadCompleted){
+                return
+            }
+            loadCompleted = true
+            clearTimeout(readyTimer)
+            stopTail()
             emit({ kind: 'gameLaunched' })
             if(hasRPC){
                 DiscordWrapper.updateDetails(L('landing.discord.loading'))
@@ -422,17 +444,15 @@ exports.launch = async function(login = true){
             proc.stdout.removeListener('data', tempListener)
             proc.stderr.removeListener('data', gameErrorListener)
         }
-        const start = Date.now()
-
-        // Attach a temporary listener to the client output. Will wait for
-        // a certain bit of text meaning that the client application has
-        // started, and we can hide the progress bar stuff.
+        // Follow the game's own log through its startup and keep the bar moving
+        // until it is actually ready, instead of hiding at "Loading Minecraft".
+        const gameProgress = createTracker()
         const tempListener = function(data){
-            if(GAME_LAUNCH_REGEX.test(data.trim())){
-                const diff = Date.now()-start
-                if(diff < MIN_LINGER){
-                    setTimeout(onLoadComplete, MIN_LINGER-diff)
-                } else {
+            const stage = gameProgress.feed(data)
+            if(stage != null){
+                emit({ kind: 'progress', percent: slice([PHASE.game, 100], (stage.percent - PHASE.game) * 100 / (100 - PHASE.game)) })
+                emit({ kind: 'details', text: L(`landing.dlAsync.${stage.key}`) })
+                if(stage.done){
                     onLoadComplete()
                 }
             }
@@ -460,11 +480,15 @@ exports.launch = async function(login = true){
             // Build Minecraft process.
             proc = pb.build()
 
-            // Bind listeners to stdout.
-            proc.stdout.on('data', tempListener)
+            // Follow the game's latest.log (not stdout, which does not reach the
+            // launcher on every setup) to drive the startup stages.
+            stopTail = tailGameLog(pb.gameDir, tempListener)
+            proc.on('close', () => stopTail())
             proc.stderr.on('data', gameErrorListener)
 
-            emit({ kind: 'details', text: L('landing.dlAsync.doneEnjoyServer') })
+            emit({ kind: 'details', text: L('landing.dlAsync.gameStarting') })
+            readyTimer = setTimeout(onLoadComplete, GAME_READY_TIMEOUT)
+            proc.on('close', () => clearTimeout(readyTimer))
 
             // Init Discord Hook
             if(distro.rawDistribution.discord != null && serv.rawServer.discord != null){
