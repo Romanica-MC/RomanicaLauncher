@@ -49,13 +49,9 @@
  *   animatica   animated textures reader — no 26.3 Modrinth build to pin
  *               yet; add it here (and to the distro) when one exists.
  */
-exports.HIGH_DETAIL_MOD_IDS = [
-    'com.modrinth:entitytexturefeatures',
-    'com.modrinth:entity-model-features',
-    'com.modrinth:polytone',
-    'com.modrinth:skyboxify',
-    'com.modrinth:yet-another-config-lib'
-]
+// Owner directive 2026-11-15 trimmed the pack to a fixed mod list without the
+// EFFECTS readers, so the toggle now only governs the texture-pack layer.
+exports.HIGH_DETAIL_MOD_IDS = []
 
 /** Distribution module id prefix of the always-on BASE pack (type File). */
 exports.BASE_PACK_MODULE_PREFIX = 'net.romanica:texture-pack-base:'

@@ -58,15 +58,16 @@ test('the high-detail toggle set and the distribution index agree exactly', () =
     }
 })
 
-test('EMF follows ETF (hard loader dependency) and Iris keeps its default', () => {
-    const emf = byVersionless.get('com.modrinth:entity-model-features')
-    const iris = byVersionless.get('com.modrinth:iris')
-    // Smoke run 40662809626: EMF 3.3.12 hard-depends on ETF >=7.2, so
-    // EMF must be excluded together with ETF when the toggle is off,
-    // else Fabric mod resolution fails and the game never starts.
-    assert.ok(emf != null && emf.required.def === false, 'EMF ships with the high-detail layer (default off)')
-    assert.ok(HighDetail.HIGH_DETAIL_MOD_IDS.includes('com.modrinth:entity-model-features'))
-    assert.ok(iris != null && iris.required.def === true, 'Iris keeps its current default')
+test('the pack ships exactly the owner-approved mod list (2026-11-15)', () => {
+    const fabricMods = modules.filter(m => m.type === 'FabricMod')
+    const ids = id => id.split(':').slice(0, 2).join(':').replace('com.modrinth:', '')
+    const required = fabricMods.filter(m => m.required == null || m.required.value === true).map(m => ids(m.id)).sort()
+    const onByDefault = fabricMods.filter(m => m.required && m.required.value === false && m.required.def === true).map(m => ids(m.id)).sort()
+    const offByDefault = fabricMods.filter(m => m.required && m.required.value === false && m.required.def === false).map(m => ids(m.id)).sort()
+    assert.deepStrictEqual(required, ['fabric-api', 'fabric-language-kotlin', 'net.imperiummc:imperium-client'].sort())
+    assert.deepStrictEqual(onByDefault, ['sodium', 'lithium', 'immediatelyfast', 'entityculling', 'moreculling',
+        'ferrite-core', 'dynamic-fps', 'modmenu', 'cloth-config', 'placeholder-api'].sort())
+    assert.deepStrictEqual(offByDefault, ['iris', 'sodium-extra', 'reeses-sodium-options', 'distanthorizons'].sort())
 })
 
 test('the distro is honest about the launcher version it was generated at', () => {

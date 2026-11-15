@@ -35,62 +35,31 @@ const MC_VERSION = '26.3';
 const SERVER_ID = 'Romanica';
 const UA = { 'User-Agent': 'RomanicaLauncher-distgen/1.0 (romanica.net)' };
 
-// The performance pack (Fabulously-Optimized-based). Modrinth slugs.
-// `required: { value: false, def: true }` lets players disable it in the Mods tab.
+// Owner directive 2026-11-15: the pack is exactly these mods, nothing else.
+// Speed mods, on by default (players can still turn them off in the Mods tab).
 const PERFORMANCE_MODS = [
   'sodium',
   'lithium',
-  'ferrite-core',
   'immediatelyfast',
   'entityculling',
+  'moreculling',
+  'ferrite-core',
   'dynamic-fps',
-  // modernfix: no 26.3 Modrinth build yet (graceful skip until published; the
-  // Alpine set runs 5.27.20 fine). lazydfu removed: dead for modern DFU-less MC.
 ];
 
-// QoL + pack-synergy set, curated from the owner's Alpine 26.3 mod set
-// (licenses verified for modpack redistribution: CC0/MIT/LGPL/GPL/OSL-3.0).
-// Deliberately NOT included, with reasons (2026-10-25):
-//   sodium-extra + reeses-sodium-options — hard-pin sodium =0.9.2 (we ship 0.9.3-beta.1)
-//   animatica / betterblockentities / modernfix — no 26.3 Modrinth builds to pin
-//   litematica + printer — schematic printing is a dupe/cheat vector on a prison server
-//   ViaFabricPlus — the server is already cross-version via Via; client-side spoofing
-//     would confuse the enforcement layer's brand/channel review
-//   iris / lambdynlights — heavy renderer-layer cost for a curated pack
-//   controlify / e4mc / NoChatReports / debugify — later or off-scope
+// Helper mods, on by default. Fabric API is added separately as required.
 const QUALITY_MODS = [
-  'rrls',            // no forced-reload wall — the 48MB pack applies in-scene
-  'fastquit',        // instant quit to title (needs cloth-config + modmenu)
-  'morechathistory', // CC0; longer scrollback
-  'language-reload', // fast locale switching (4 shipped locales)
-  'cloth-config',    // config lib for moreculling & friends
-  'modmenu',         // in-game config UI for the pack's mods
-  'moreculling',     // leaf/block-face culling on top of entityculling
+  'modmenu',
+  'cloth-config',
+  'placeholder-api',
 ];
 
-const VISUAL_MODS = [
-  // entitytexturefeatures + entity-model-features moved to HIGH_DETAIL_MODS
-  // (issue #15): they read the EFFECTS pack's OptiFine features and sit
-  // behind the launcher's "High-detail textures" toggle, off by default.
-  // EMF hard-depends on ETF, so the pair moves together.
-  'iris',                  // shader support + renderer-layer optimizations
-];
-
-// Issue #15 "High-detail textures" feature set: the mods that read the
-// EFFECTS pack's OptiFine-style features. Emitted with def: false — off
-// by default (memory/FPS cost) and controlled by the launcher's
-// "High-detail textures" setting. Keep in sync with
-// app/assets/js/highdetail.js (test/distro-packs.test.js enforces it).
-//   continuity: owner directive 2026-10-25 — breaks the pack's textures
-//     in play; do not re-add without an in-game check.
-//   animatica: no 26.3 Modrinth build to pin yet (checked 2026-10-28);
-//     add here + to highdetail.js when one exists.
-const HIGH_DETAIL_MODS = [
-  'entitytexturefeatures',       // random/varied mob textures
-  'entity-model-features',       // custom mob models (requires ETF)
-  'polytone',                    // colormaps + custom fonts
-  'skyboxify',                   // custom sky
-  'yet-another-config-lib',      // config lib skyboxify depends on
+// Extras, shipped off: players turn them on under Optional mods.
+const OPTIONAL_MODS = [
+  'iris',
+  'sodium-extra',
+  'reeses-sodium-options',
+  'distanthorizons',
 ];
 
 // Issue #15: the texture pack ships as managed File modules landing in the
@@ -114,41 +83,6 @@ const RESOURCE_PACKS = [
     file: 'MINARECRAFTORVM_v2.0.1_26.2_EFFECTS.zip',
     url: 'https://github.com/Romanica-MC/romanica-resourcepack/releases/download/textures/MINARECRAFTORVM_v2.0.1_26.2_EFFECTS.zip',
     required: { value: false, def: false },
-  },
-];
-
-// Performance round 3 (owner asked for more perf). c2me/scalablelux ship alphas
-// as their normal channel (perpetual-alpha projects); pinned by hash either way.
-const PERFORMANCE_MODS_R3 = [
-  'c2me-fabric',                // parallel chunk loading — the big one for mine/plot worlds
-  'krypton',                    // networking stack optimization
-  'badoptimizations',           // micro-optimization collection
-  'particle-core',              // particle engine optimization (needs fzzy-config below)
-  'fzzy-config',                // config lib for particle-core (TDL license, modpack-ok)
-  'sodium-shadowy-path-blocks', // sodium addon fixing shadowy path blocks (in the owner's Alpine set)
-  'scalablelux',                // lighting engine (Starlight successor) — mines are lighting-heavy
-];
-
-const CROSSVERSION_MODS = [
-  // Owner directive (2026-10-25): lets players use the client on other servers.
-  // Version spoofing only activates for cross-version targets; the enforcement
-  // layer's scope is romanica.net (inert elsewhere), so no interaction.
-  'viafabricplus',
-];
-
-// modernfix-mvus is the 26.3 continuation fork (embeddedt's original stops at
-// 1.20.1 on Modrinth); the owner's Alpine set runs exactly 5.27.20-build.2.
-const PERFORMANCE_MODS_EXTRA = ['modernfix-mvus'];
-
-// Vendored artifacts (committed under distribution/vendor/, served immutable):
-// BBE has no canonical 26.3 release artifact (Modrinth stops at 1.21.7; the
-// author publishes source only) — MIT license permits redistribution, so the
-// exact jar the owner runs is vendored and hash-pinned.
-const VENDORED_MODS = [
-  {
-    id: 'com.modrinth:bbe:1.3.9+mc26.3',
-    name: 'Better Block Entities 1.3.9+mc26.3',
-    file: 'bbe-fabric-1.3.9+mc26.3-fabric.jar',
   },
 ];
 
@@ -416,7 +350,7 @@ async function main() {
 
   console.log('Resolving performance pack ...');
   const perf = [];
-  for (const slug of [...PERFORMANCE_MODS, ...PERFORMANCE_MODS_EXTRA, ...PERFORMANCE_MODS_R3, ...QUALITY_MODS, ...VISUAL_MODS, ...CROSSVERSION_MODS]) {
+  for (const slug of [...PERFORMANCE_MODS, ...QUALITY_MODS]) {
     try {
       perf.push(await modrinthModule(slug));
       console.log(`  ${slug} ok`);
@@ -425,8 +359,8 @@ async function main() {
     }
   }
 
-  console.log('Resolving high-detail feature pack (def: false) ...');
-  for (const slug of HIGH_DETAIL_MODS) {
+  console.log('Resolving optional extras (def: false) ...');
+  for (const slug of OPTIONAL_MODS) {
     try {
       perf.push(await modrinthModule(slug, false));
       console.log(`  ${slug} ok`);
@@ -435,23 +369,6 @@ async function main() {
     }
   }
 
-  console.log('Resolving vendored mods ...');
-  const DISTRO_RAW = 'https://raw.githubusercontent.com/Romanica-MC/RomanicaLauncher/master/distribution';
-  for (const v of VENDORED_MODS) {
-    const buf = fs.readFileSync(path.join(__dirname, '..', 'distribution', 'vendor', v.file));
-    perf.push({
-      id: v.id,
-      name: v.name,
-      type: 'FabricMod',
-      required: { value: false, def: true },
-      artifact: artifact(
-        `${DISTRO_RAW}/vendor/${v.file}`,
-        crypto.createHash('md5').update(buf).digest('hex'),
-        buf.length,
-        crypto.createHash('sha256').update(buf).digest('hex')
-      ),
-    });
-  }
 
   console.log('Resolving resource packs ...');
   // File modules with an explicit artifact.path land at

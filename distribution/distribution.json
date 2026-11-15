@@ -47,8 +47,8 @@
                             "type": "VersionManifest",
                             "artifact": {
                                 "size": 2778,
-                                "MD5": "f4d2557719baa1a472472a7cdc26b6e1",
-                                "sha256": "793074e1e462c07b6e39ce963f77a99b653c852ba4b644222283d017eb307946",
+                                "MD5": "ef89fb3f6500c3c13ba524e4c2a540bc",
+                                "sha256": "283440edd77d1db64b3e118d35efb967a954972b5f251ba5297a77347313b76a",
                                 "url": "https://raw.githubusercontent.com/Romanica-MC/RomanicaLauncher/master/distribution/vendor/fabric-profile-26.3-0.20.1.json"
                             }
                         },
@@ -147,63 +147,48 @@
                     }
                 },
                 {
-                    "id": "com.modrinth:fabric-api:0.165.0-26.3",
-                    "name": "[26.3] Fabric API 0.165.0+26.3",
+                    "id": "com.modrinth:fabric-api:0.166.2-26.3",
+                    "name": "[26.3] Fabric API 0.166.2+26.3",
                     "type": "FabricMod",
                     "required": {
                         "value": true,
                         "def": true
                     },
                     "artifact": {
-                        "size": 1778588,
-                        "MD5": "8181fce1be2e6ad90f8c09f9a7db1467",
-                        "sha256": "18442e2ad466d6ef41c37dbb4cb68495e6ca6658b1f1ee9be76143d155ef2c88",
-                        "url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/EQKgpeKu/fabric-api-0.165.0%2B26.3.jar"
+                        "size": 1797523,
+                        "MD5": "6e761f94379e46dc0fe03b49b063a386",
+                        "sha256": "e8acacc7836f39237c83c2a664b039647ee36f93822797acc40cda44666002ea",
+                        "url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/Zns5SSRA/fabric-api-0.166.2%2B26.3.jar"
                     }
                 },
                 {
-                    "id": "com.modrinth:sodium:mc26.3-0.9.3-beta.1-fabric",
-                    "name": "Sodium 0.9.3-beta.1 for Fabric 26.3",
+                    "id": "com.modrinth:sodium:mc26.3-0.9.3-beta.5-fabric",
+                    "name": "Sodium 0.9.3-beta.5 for Fabric 26.3",
                     "type": "FabricMod",
                     "required": {
                         "value": false,
                         "def": true
                     },
                     "artifact": {
-                        "size": 1912496,
-                        "MD5": "acc6ae644c0a71953832d35d9fb475e6",
-                        "sha256": "84cdb90d273aadbc00cddbcc82ede6e44fd33ac635f23c1d43fec28cc43b9bd6",
-                        "url": "https://cdn.modrinth.com/data/AANobbMI/versions/g6ju16VJ/sodium-fabric-0.9.3-beta.1%2Bmc26.3.jar"
+                        "size": 1914521,
+                        "MD5": "2df28e794495808d7eb572ee563f6bc5",
+                        "sha256": "be03d3c4ab16ecf0a8fdd4e09c3b76225e26d39fb9f16b159592598cc11e437d",
+                        "url": "https://cdn.modrinth.com/data/AANobbMI/versions/v7Lw0h1m/sodium-fabric-0.9.3-beta.5%2Bmc26.3.jar"
                     }
                 },
                 {
-                    "id": "com.modrinth:lithium:mc26.3-0.26.2-fabric",
-                    "name": "Lithium 0.26.2 for Fabric",
+                    "id": "com.modrinth:lithium:mc26.3-0.26.3-fabric",
+                    "name": "Lithium 0.26.3 for Fabric",
                     "type": "FabricMod",
                     "required": {
                         "value": false,
                         "def": true
                     },
                     "artifact": {
-                        "size": 914543,
-                        "MD5": "4bb4ada83b50bb026550b20aabcad32c",
-                        "sha256": "0be5b17ef9f6e9244cd07b24b227553a73aec0cf93158cf28099f3094c167f1b",
-                        "url": "https://cdn.modrinth.com/data/gvQqBUqZ/versions/xS0Q8LSi/lithium-fabric-0.26.2%2Bmc26.3.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:ferrite-core:9.0.0-fabric",
-                    "name": "ferritecore-9.0.0-fabric",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": true
-                    },
-                    "artifact": {
-                        "size": 72677,
-                        "MD5": "9d96f643cfd220b75f47c94ea56ebc2a",
-                        "sha256": "213966c72ed967acc7392beb28a866fba301ff56b9976c2e7801c2db7de6bf22",
-                        "url": "https://cdn.modrinth.com/data/uXXizFIs/versions/d5ddUdiB/ferritecore-9.0.0-fabric.jar"
+                        "size": 919892,
+                        "MD5": "76f9def9d097bd27248b5e5cd2e7542c",
+                        "sha256": "103b6aab3932f119155565254a3f33b1be0da26b9bf7a5eec24851542144fc78",
+                        "url": "https://cdn.modrinth.com/data/gvQqBUqZ/versions/fWv5bnZk/lithium-fabric-0.26.3%2Bmc26.3.jar"
                     }
                 },
                 {
@@ -222,18 +207,48 @@
                     }
                 },
                 {
-                    "id": "com.modrinth:entityculling:1.11.3",
-                    "name": "1.11.3-26.3 - Fabric",
+                    "id": "com.modrinth:entityculling:1.12.1",
+                    "name": "1.12.1-26.3 - Fabric",
                     "type": "FabricMod",
                     "required": {
                         "value": false,
                         "def": true
                     },
                     "artifact": {
-                        "size": 1508547,
-                        "MD5": "2215f5aec107034e3ed86690ebe2a645",
-                        "sha256": "d2f80514ee3382b1fa7afda4df762df50743226e3cd320b829ee507357aeafbc",
-                        "url": "https://cdn.modrinth.com/data/NNAgCjsB/versions/X1g3VhTx/entityculling-fabric-1.11.3-mc26.3.jar"
+                        "size": 1522184,
+                        "MD5": "435f8c6c00a748086c2e96a8094678e9",
+                        "sha256": "60b9a5490a0eba5caa9bcb679b1a1e700a5d63dcd82d721e0d238477c0dfaf0f",
+                        "url": "https://cdn.modrinth.com/data/NNAgCjsB/versions/UWpkLRV5/entityculling-fabric-1.12.1-mc26.3.jar"
+                    }
+                },
+                {
+                    "id": "com.modrinth:moreculling:1.9.2",
+                    "name": "v1.9.2",
+                    "type": "FabricMod",
+                    "required": {
+                        "value": false,
+                        "def": true
+                    },
+                    "artifact": {
+                        "size": 297119,
+                        "MD5": "2d7132d9060d383384f53665cbeded69",
+                        "sha256": "6e5cd977c5c588e26535bc03d898c5d2ebd3c204c8b45e2677ffd40b98d8eb3b",
+                        "url": "https://cdn.modrinth.com/data/51shyZVL/versions/loquqFkT/moreculling-fabric-26.3-1.9.2.jar"
+                    }
+                },
+                {
+                    "id": "com.modrinth:ferrite-core:9.0.0-fabric",
+                    "name": "ferritecore-9.0.0-fabric",
+                    "type": "FabricMod",
+                    "required": {
+                        "value": false,
+                        "def": true
+                    },
+                    "artifact": {
+                        "size": 72677,
+                        "MD5": "9d96f643cfd220b75f47c94ea56ebc2a",
+                        "sha256": "213966c72ed967acc7392beb28a866fba301ff56b9976c2e7801c2db7de6bf22",
+                        "url": "https://cdn.modrinth.com/data/uXXizFIs/versions/d5ddUdiB/ferritecore-9.0.0-fabric.jar"
                     }
                 },
                 {
@@ -252,183 +267,18 @@
                     }
                 },
                 {
-                    "id": "com.modrinth:modernfix-mvus:5.27.20-build.2",
-                    "name": "ModernFix-mVUS 5.27.20-build.2 for 26.3",
+                    "id": "com.modrinth:modmenu:21.0.1",
+                    "name": "v21.0.1 for 26.3",
                     "type": "FabricMod",
                     "required": {
                         "value": false,
                         "def": true
                     },
                     "artifact": {
-                        "size": 1168784,
-                        "MD5": "be050737ccdbee7e458bb02b46b7940b",
-                        "sha256": "f340fff04132ae9b60eae494d2de4cd177d436da8c0e525d6bd8f5b15ed141b5",
-                        "url": "https://cdn.modrinth.com/data/TjSm1wrD/versions/pa9cAfYg/modernfix-5.27.20-build.2.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:c2me-fabric:0.4.2-alpha.0.106-26.3",
-                    "name": "0.4.2-alpha.0.106 devbuild for 26.3",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": true
-                    },
-                    "artifact": {
-                        "size": 4195982,
-                        "MD5": "88d363f1394573d33ad7c033a3c19ebb",
-                        "sha256": "41b49a6276d477ca45b4398457a658e72063dab2251e20fd73faa89279efc288",
-                        "url": "https://cdn.modrinth.com/data/VSNURh3q/versions/gKKkuSYc/c2me-fabric-mc26.3-0.4.2-alpha.0.106.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:krypton:0.3.2",
-                    "name": "Krypton 0.3.2",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": true
-                    },
-                    "artifact": {
-                        "size": 268849,
-                        "MD5": "5ab19c85c1e75b7cfab1ed768d43d468",
-                        "sha256": "0b4a648b9c2f048247f849712aff58b2bac5b27b60c0072bb6bf493ad8b79fef",
-                        "url": "https://cdn.modrinth.com/data/fQEb0iXm/versions/UugdIYJw/krypton-0.3.2.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:badoptimizations:2.4.1",
-                    "name": "2.4.1 (26.3/fabric)",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": true
-                    },
-                    "artifact": {
-                        "size": 60760,
-                        "MD5": "1c768842bb1df69e9857d10aecf3817e",
-                        "sha256": "b72d071777ebf832e7e441754385be06f942d08a8c3f5b9f317eb8c050490eaf",
-                        "url": "https://cdn.modrinth.com/data/g96Z4WVZ/versions/Sp0ctspw/BadOptimizations-2.4.1-26.3-fabric.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:particle-core:0.3.3-fix1-26.2",
-                    "name": "Particle Core 0.3.3+fix1+26.2",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": true
-                    },
-                    "artifact": {
-                        "size": 141191,
-                        "MD5": "f43a47672796a47682ac09c1e54532cb",
-                        "sha256": "63faafcec078ea567a410f75fe449ae6895d29028686a144c18e5121c9552a6b",
-                        "url": "https://cdn.modrinth.com/data/RSeLon5O/versions/NPLw1nMG/particle_core-0.3.3%2Bfix1%2B26.2.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:fzzy-config:0.7.7-fix3-26.3",
-                    "name": "fzzy_config-0.7.7+fix3+26.3",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": true
-                    },
-                    "artifact": {
-                        "size": 2375413,
-                        "MD5": "d0484019ab0ec923f8ed18730e06327d",
-                        "sha256": "3d98c61215ae5eb2fe08db5cac6b0da08dc1b6f0a9ac082a3a9ead8eed736b2a",
-                        "url": "https://cdn.modrinth.com/data/hYykXjDp/versions/YkOumqzV/fzzy_config-0.7.7%2Bfix3%2B26.3.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:sodium-shadowy-path-blocks:8.0.0-fabric",
-                    "name": "SSPB 8.0.0 for Sodium 0.9.2 / Fabric",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": true
-                    },
-                    "artifact": {
-                        "size": 70232,
-                        "MD5": "1493d6a2d91803363820ac16758c64cb",
-                        "sha256": "5033e2873cf718a2667903c0b8dfcd6895776b5d12e7a3cfd228f4d5193a74d6",
-                        "url": "https://cdn.modrinth.com/data/EIa1eiMm/versions/gobiZrtK/sodium-shadowy-path-blocks-fabric-8.0.0.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:scalablelux:0.3.0-alpha.0.6-26.3",
-                    "name": "0.3.0-alpha.0.6 devbuild for fabric 26.3",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": true
-                    },
-                    "artifact": {
-                        "size": 193021,
-                        "MD5": "cc15538943d82fad1a2cd4fdee652002",
-                        "sha256": "e9137a04fdefca4fd1f4740ab3dc6194b5ea7c15456c6691376b910053853a29",
-                        "url": "https://cdn.modrinth.com/data/Ps1zyz6x/versions/g4eqNSKd/ScalableLux-fabric-mc26.3-0.3.0-alpha.0.6-all.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:rrls:5.2.8-mc26.3",
-                    "name": "[26.3] v5.2.8",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": true
-                    },
-                    "artifact": {
-                        "size": 117764,
-                        "MD5": "713978b6026c2e31772ba862eb3447c1",
-                        "sha256": "ab0fda8a8421da7dce8921da30d4dd634a9863b25d99fde5488270e57b95d572",
-                        "url": "https://cdn.modrinth.com/data/ZP7xHXtw/versions/CAVJGGfj/rrls-5.2.8%2Bmc.26.3.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:fastquit:3.1.5-mc26.2",
-                    "name": "3.1.5 - 26.2-26.3",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": true
-                    },
-                    "artifact": {
-                        "size": 63310,
-                        "MD5": "485f105d47952e6423ac472267d134f7",
-                        "sha256": "f18490dfd6c52f9abf4cbf06e0228269425acb42a8b75dd29cd26c574aac47a4",
-                        "url": "https://cdn.modrinth.com/data/x1hIzbuY/versions/ZZ5dfboC/fastquit-3.1.5%2Bmc26.2.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:morechathistory:2.0.0",
-                    "name": "More Chat History 2.0.0 [MC 26.1+]",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": true
-                    },
-                    "artifact": {
-                        "size": 3773,
-                        "MD5": "89baaf10d39c96e70460765738afb201",
-                        "sha256": "5a98a8c5b5ab9f6e34393ea62ba462e17c696d4319fdeeaf98f516e11afc3587",
-                        "url": "https://cdn.modrinth.com/data/8qkXwOnk/versions/qpDhYv1Y/morechathistory-2.0.0.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:language-reload:1.7.8-26.3",
-                    "name": "1.7.8+26.3",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": true
-                    },
-                    "artifact": {
-                        "size": 79325,
-                        "MD5": "dc6c71b2ba9e1000824c7b9c17e12922",
-                        "sha256": "b40ae2cc0e06f222ef30ef3d3d9fb54d31c6ab137d650c3734609c4317b98986",
-                        "url": "https://cdn.modrinth.com/data/uLbm7CG6/versions/QVn4cccd/language-reload-1.7.8%2B26.3.jar"
+                        "size": 862761,
+                        "MD5": "144978805a3c9d97652d3e20a3671014",
+                        "sha256": "d7be5d007b1d908ee3c3109e337b208d94e6ef7dd6bd143397237a0e03579005",
+                        "url": "https://cdn.modrinth.com/data/mOgUt4GM/versions/xckkBHD5/modmenu-21.0.1.jar"
                     }
                 },
                 {
@@ -447,108 +297,18 @@
                     }
                 },
                 {
-                    "id": "com.modrinth:modmenu:21.0.0",
-                    "name": "v21.0.0 for 26.3",
+                    "id": "com.modrinth:placeholder-api:3.2.0-26.3",
+                    "name": "3.2.0+26.3",
                     "type": "FabricMod",
                     "required": {
                         "value": false,
                         "def": true
                     },
                     "artifact": {
-                        "size": 856779,
-                        "MD5": "d2b9c21cb592b8723d3d443589aabc8a",
-                        "sha256": "837812c6c98d66141db7b5dcae668f27fb78d557e8f4c0c89912985fc26a5e6f",
-                        "url": "https://cdn.modrinth.com/data/mOgUt4GM/versions/kyy7dbrZ/modmenu-21.0.0.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:moreculling:1.9.0",
-                    "name": "1.9.0",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": true
-                    },
-                    "artifact": {
-                        "size": 294320,
-                        "MD5": "44dd60956fe1f666b2c06f4c957f0b8e",
-                        "sha256": "4739cf1bba326d538247b565a0200f926b2c56bf0e1106495335eec4d8528b0c",
-                        "url": "https://cdn.modrinth.com/data/51shyZVL/versions/t7vAlfgO/moreculling-fabric-26.3-1.9.0.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:entitytexturefeatures:7.2.6-fabric-26.3",
-                    "name": "7.2.6-fabric-26.3",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": false
-                    },
-                    "artifact": {
-                        "size": 793054,
-                        "MD5": "93e8cb23ab1557b0f2aa020f8df3d0b6",
-                        "sha256": "9ae73892099aa759e0cfc0ccb1fcba3986e27a7c743ad5832310ba8ca58f644a",
-                        "url": "https://cdn.modrinth.com/data/BVzZfTc1/versions/OOEycXyN/entity_texture_features-7.2.6-26.3-fabric.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:polytone:26.3-6.8.6",
-                    "name": "PolyTone 26.3-6.8.6 (colormaps + fonts, high detail)",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": false
-                    },
-                    "artifact": {
-                        "size": 1681327,
-                        "MD5": "cb5445cba075b1344d3503baef31e21a",
-                        "sha256": "ae7252f16e58e0537285d4c9209afd2baf1386934a5f19f783424d82c6f11979",
-                        "url": "https://cdn.modrinth.com/data/3qAYkBMB/versions/qM0zPlR5/polytone-26.3-6.8.6-fabric.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:skyboxify:3.4-26.3-fabric",
-                    "name": "Skyboxify 3.4 (custom sky, high detail)",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": false
-                    },
-                    "artifact": {
-                        "size": 306236,
-                        "MD5": "ed82dc780441b011be675b0659494d75",
-                        "sha256": "0b29f9ee0a18a9ae441cd666746937b91e2f2f28b090ec7dad041c719304762c",
-                        "url": "https://cdn.modrinth.com/data/DWuwk8aA/versions/LSewIGOo/skyboxify-3.4%2B26.3-fabric.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:yet-another-config-lib:3.9.7-26.3-fabric",
-                    "name": "YetAnotherConfigLib 3.9.7+26.3 (required by Skyboxify)",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": false
-                    },
-                    "artifact": {
-                        "size": 1125377,
-                        "MD5": "967207b5cf360d9481fb318abacfe8eb",
-                        "sha256": "c52d41d444522d9abba994cd4c4ee2e71a065d7c31010f92a9959b80ccb4b0f5",
-                        "url": "https://cdn.modrinth.com/data/1eAoo2KR/versions/s9SjoFu1/yet_another_config_lib_v3-3.9.7%2B26.3-fabric.jar"
-                    }
-                },
-                {
-                    "id": "com.modrinth:entity-model-features:3.3.12-fabric-26.3",
-                    "name": "3.3.12-fabric-26.3",
-                    "type": "FabricMod",
-                    "required": {
-                        "value": false,
-                        "def": false
-                    },
-                    "artifact": {
-                        "size": 665386,
-                        "MD5": "92e72c097bce4031b2ee69072ca3dddc",
-                        "sha256": "4a8b04d26c94909a3ba9f08972fb475e7d39f715f666f99a294017baaa37cb69",
-                        "url": "https://cdn.modrinth.com/data/4I1XuqiY/versions/vF6qLXsA/entity_model_features-3.3.12-26.3-fabric.jar"
+                        "size": 254959,
+                        "MD5": "ca2d9a353e202ce5c11177fb4a7668b1",
+                        "sha256": "d9a5351b42a8d79cfc2e7f2a471472f9e4dff3b13874c8d420dbb93600b91a85",
+                        "url": "https://cdn.modrinth.com/data/eXts2L7r/versions/lXytLqWj/placeholder-api-3.2.0%2B26.3.jar"
                     }
                 },
                 {
@@ -557,7 +317,7 @@
                     "type": "FabricMod",
                     "required": {
                         "value": false,
-                        "def": true
+                        "def": false
                     },
                     "artifact": {
                         "size": 2850938,
@@ -567,33 +327,48 @@
                     }
                 },
                 {
-                    "id": "com.modrinth:viafabricplus:5.1.2",
-                    "name": "5.1.2 (26.3)",
+                    "id": "com.modrinth:sodium-extra:mc26.3-0.9.6-beta.4-fabric",
+                    "name": "[Fabric] mc26.3-0.9.6-beta.4",
                     "type": "FabricMod",
                     "required": {
                         "value": false,
-                        "def": true
+                        "def": false
                     },
                     "artifact": {
-                        "size": 10351659,
-                        "MD5": "e27a75e697b9c6615625f1d6d286c9e9",
-                        "sha256": "00ebe434d8953077362719e69ff243956dfd8e6037745ea6104cf500adc541b6",
-                        "url": "https://cdn.modrinth.com/data/rIC2XJV4/versions/USbdQnMN/ViaFabricPlus-5.1.2.jar"
+                        "size": 483065,
+                        "MD5": "60f129b2782f0f2c5d5e8c3ea85a4b35",
+                        "sha256": "c09b48038b3a426fffbad80fdf33e6a16feb3d674d523d64682533447ce438a6",
+                        "url": "https://cdn.modrinth.com/data/PtjYWJkn/versions/7KisD3HH/sodium-extra-fabric-0.9.6-beta.4%2Bmc26.3.jar"
                     }
                 },
                 {
-                    "id": "com.modrinth:bbe:1.3.9+mc26.3",
-                    "name": "Better Block Entities 1.3.9+mc26.3",
+                    "id": "com.modrinth:reeses-sodium-options:mc26.3-2.2.6-beta.4-fabric",
+                    "name": "[Fabric] mc26.3-2.2.6-beta.4",
                     "type": "FabricMod",
                     "required": {
                         "value": false,
-                        "def": true
+                        "def": false
                     },
                     "artifact": {
-                        "size": 207630,
-                        "MD5": "0d72fef0b20a0963f543e4c0f5f18dbc",
-                        "sha256": "03e0a5e60b6ea16d740f5b1f1f61e6226240a99eaf0993cac2d0d0427d00ea6d",
-                        "url": "https://raw.githubusercontent.com/Romanica-MC/RomanicaLauncher/master/distribution/vendor/bbe-fabric-1.3.9+mc26.3-fabric.jar"
+                        "size": 265051,
+                        "MD5": "c5056c3e7af2b20caf9ca6dafc12aeed",
+                        "sha256": "d2e5460ea3dce4c10bcbc1e6ab3d2461e3b5ec4231da8d1d5c08a7846b59a9c5",
+                        "url": "https://cdn.modrinth.com/data/Bh37bMuy/versions/sA9O66MU/reeses-sodium-options-fabric-2.2.6-beta.4%2Bmc26.3.jar"
+                    }
+                },
+                {
+                    "id": "com.modrinth:distanthorizons:3.3.4-26.3",
+                    "name": "3.3.4 - 26.3 neo/fabric",
+                    "type": "FabricMod",
+                    "required": {
+                        "value": false,
+                        "def": false
+                    },
+                    "artifact": {
+                        "size": 28476894,
+                        "MD5": "ea69fb5251e970288ec4162acf0298a3",
+                        "sha256": "ba3e5c85a765a109219831df99b99ef5cfcdee05b2dfa6796116993bd48d3947",
+                        "url": "https://cdn.modrinth.com/data/uCdwusMi/versions/TGgEbP9A/DistantHorizons-3.3.4-26.3-fabric-neoforge.jar"
                     }
                 }
             ]

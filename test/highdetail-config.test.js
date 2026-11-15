@@ -74,7 +74,17 @@ test('pack option writes are gated off until the packs repo metadata is accepted
     ConfigManager.setPackOptionWritesEnabled(false)
 })
 
-test('reconcileModConfigs flips exactly the feature mods that are configured', () => {
+// The shipped list is empty since the 2026-11-15 pack trim; the toggle mechanism is
+// still tested against the former feature set.
+const FIXTURE_IDS = ['com.modrinth:entitytexturefeatures', 'com.modrinth:entity-model-features',
+    'com.modrinth:polytone', 'com.modrinth:skyboxify', 'com.modrinth:yet-another-config-lib']
+function withFixtureIds(fn){
+    const saved = HighDetail.HIGH_DETAIL_MOD_IDS
+    HighDetail.HIGH_DETAIL_MOD_IDS = FIXTURE_IDS
+    try { return fn() } finally { HighDetail.HIGH_DETAIL_MOD_IDS = saved }
+}
+
+test('reconcileModConfigs flips exactly the feature mods that are configured', () => withFixtureIds(() => {
     const calls = []
     const fakeConfig = {
         modConfigurations: [
@@ -104,13 +114,12 @@ test('reconcileModConfigs flips exactly the feature mods that are configured', (
     assert.strictEqual(other['com.modrinth:skyboxify'].value, true)
     assert.strictEqual(romanica['com.modrinth:sodium'], true)
     assert.ok(calls.length === 0)
-})
+}))
 
 test('the bootstrap exposes the feature mod id list to the renderer mirror', () => {
     // bridge.js reads Imperium.env.highDetailModIds; the launcher's single
-    // source of truth must keep that list non-empty and id-shaped.
+    // source of truth must keep that list an array of id-shaped entries (empty since the 2026-11-15 pack trim).
     assert.ok(Array.isArray(HighDetail.HIGH_DETAIL_MOD_IDS))
-    assert.ok(HighDetail.HIGH_DETAIL_MOD_IDS.length > 0)
     for(const id of HighDetail.HIGH_DETAIL_MOD_IDS){
         assert.match(id, /^com\.modrinth:[a-z0-9-]+$/, `feature id ${id} must be a versionless maven id`)
     }

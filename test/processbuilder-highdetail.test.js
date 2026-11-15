@@ -24,6 +24,16 @@ const ProcessBuilder = require('../app/assets/js/processbuilder')
 const HighDetail     = require('../app/assets/js/highdetail')
 const PackPreferences = require('../app/assets/js/packpreferences')
 
+// The shipped list is empty since the 2026-11-15 pack trim; the toggle mechanism is
+// still tested against the former feature set.
+const FIXTURE_IDS = ['com.modrinth:entitytexturefeatures', 'com.modrinth:entity-model-features',
+    'com.modrinth:polytone', 'com.modrinth:skyboxify', 'com.modrinth:yet-another-config-lib']
+function withFixtureIds(fn){
+    const saved = HighDetail.HIGH_DETAIL_MOD_IDS
+    HighDetail.HIGH_DETAIL_MOD_IDS = FIXTURE_IDS
+    try { return fn() } finally { HighDetail.HIGH_DETAIL_MOD_IDS = saved }
+}
+
 const BASE_FILE = 'Romanica_TexturePack_v2.0.9_26.2_BASE.zip'
 const EFFECTS_FILE = 'MINARECRAFTORVM_v2.0.1_26.2_EFFECTS.zip'
 
@@ -49,7 +59,7 @@ function resolve(modules, modCfg, highDetail){
     return ProcessBuilder.prototype.resolveModConfiguration.call({}, modCfg, modules, highDetail)
 }
 
-test('master switch OFF keeps the feature mods out of the launch mod list', () => {
+test('master switch OFF keeps the feature mods out of the launch mod list', () => withFixtureIds(() => {
     const modules = [
         fabricMod('com.modrinth:entitytexturefeatures:7.2.6-fabric-26.3'),
         fabricMod('com.modrinth:entity-model-features:3.3.12-fabric-26.3'),
@@ -71,7 +81,7 @@ test('master switch OFF keeps the feature mods out of the launch mod list', () =
         'EMF must be excluded together with ETF (it hard-depends on ETF: smoke run 40662809626)')
     assert.ok(!ids.some(id => id.startsWith('com.modrinth:polytone')), 'PolyTone must be excluded when High-detail is off')
     assert.ok(ids.some(id => id.startsWith('com.modrinth:sodium')), 'non-feature mods are unaffected by the switch')
-})
+}))
 
 test('master switch ON leaves the per-mod toggles in charge', () => {
     const modules = [
@@ -101,7 +111,7 @@ test('the exclusion list matches the ids the distribution ships', () => {
     }
 })
 
-test('the real launch path (resolveLaunchMods, the call build() makes) carries the switch', () => {
+test('the real launch path (resolveLaunchMods, the call build() makes) carries the switch', () => withFixtureIds(() => {
     // Guards the exact wiring build() uses: a resolveModConfiguration that
     // ignores ConfigManager.getHighDetailTextures() would make the setting
     // a no-op in production while direct-call tests still passed.
@@ -130,7 +140,7 @@ test('the real launch path (resolveLaunchMods, the call build() makes) carries t
     highDetailState.highDetail = true
     const on = ProcessBuilder.prototype.resolveLaunchMods.call(fakeThis)
     assert.strictEqual(on.fMods.length, 2, 'with the switch on, the stored toggles launch')
-})
+}))
 
 test('the pack preference wiring runs at launch: options.txt entries + managed flag', async (t) => {
     const gameDir = await fs.mkdtemp(path.join(os.tmpdir(), 'romanica-pb-packs-'))
