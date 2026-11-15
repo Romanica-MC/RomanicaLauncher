@@ -47,8 +47,8 @@
                             "type": "VersionManifest",
                             "artifact": {
                                 "size": 2778,
-                                "MD5": "ef89fb3f6500c3c13ba524e4c2a540bc",
-                                "sha256": "283440edd77d1db64b3e118d35efb967a954972b5f251ba5297a77347313b76a",
+                                "MD5": "f4d2557719baa1a472472a7cdc26b6e1",
+                                "sha256": "793074e1e462c07b6e39ce963f77a99b653c852ba4b644222283d017eb307946",
                                 "url": "https://raw.githubusercontent.com/Romanica-MC/RomanicaLauncher/master/distribution/vendor/fabric-profile-26.3-0.20.1.json"
                             }
                         },
